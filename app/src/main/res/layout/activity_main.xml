@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -27,13 +35,12 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.841">
 
-            <androidx.fragment.app.FragmentContainerView
+            <FrameLayout
                 android:id="@+id/fragmentBrowse"
-                android:name="com.example.restaurantreview.Browse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#00FFFFFF"
-                tools:layout="@layout/fragment_browse" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </FrameLayout>
 
 
         </androidx.cardview.widget.CardView>
@@ -81,15 +88,19 @@
         <ImageButton
             android:id="@+id/btnSearch"
             android:layout_width="107dp"
-            android:layout_height="41dp"
+            android:layout_height="48dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
+            android:minWidth="15dp"
+            android:minHeight="15dp"
             android:background="@android:drawable/ic_media_ff"
+            android:contentDescription="@android:string/search_go"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.309" />
+            app:layout_constraintVertical_bias="0.309"
+           />
 
         <ImageButton
             android:id="@+id/btnRandom"
@@ -130,4 +141,5 @@
             app:srcCompat="@drawable/world" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+   </androidx.core.widget.NestedScrollView>
 </layout>
