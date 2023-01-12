@@ -22,7 +22,7 @@ lateinit var imageId : Array<Int>
 lateinit var recipe: Array<String>
 lateinit var title: Array<String>
 
-private lateinit var btnRecipe : Button
+//private lateinit var btnRecipe : Button
 private lateinit var binding: FragmentBrowseBinding
 
 class Browse : Fragment() {
@@ -31,25 +31,27 @@ class Browse : Fragment() {
         fun newInstance() = Browse()
     }
 
+    private var searchResults = ArrayList<GoogleSearch.Recipe>()
+
     private lateinit var viewModel: BrowseViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentBrowseBinding.inflate(inflater,container,false);
-        return binding.getRoot();
+        binding = FragmentBrowseBinding.inflate(inflater, container, false)
+        return binding.getRoot()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        searchResults =
+            arguments?.getSerializable("searchResults") as ArrayList<GoogleSearch.Recipe>
         super.onViewCreated(view, savedInstanceState)
-        dataInitialize()
+//        dataInitialize()
         val layoutManager = GridLayoutManager(context, 2)
         recyclerView = view.findViewById(R.id.rvBrowse)
         recyclerView.layoutManager = layoutManager
-        recyclerView.setHasFixedSize(true)
-        adapter = MyAdapter(recipesArrayList)
+        adapter = MyAdapter(searchResults)
         recyclerView.adapter = adapter
         viewModel = ViewModelProvider(this).get(BrowseViewModel::class.java)
 

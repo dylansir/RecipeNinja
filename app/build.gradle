@@ -20,6 +20,7 @@ android {
 
     buildTypes {
         release {
+            buildConfigField("String", "API_KEY", "\"AIzaSyCmExfI97IEgqgGQDY9KYZRkGzQs75tEcs\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -44,6 +45,15 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def lifecycle_version = "2.5.1"
 
+    //gson
+
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     // ViewModel utilities for Compose
@@ -51,7 +61,7 @@ dependencies {
     // LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
 
-
+    implementation 'org.jsoup:jsoup:1.14.3'
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 

@@ -1,10 +1,7 @@
 package com.example.restaurantreview
 
-import android.content.Context
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -15,8 +12,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
+    private lateinit var googleSearch: GoogleSearch
 
     private lateinit var recipeList: RecipeList
 
@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-
         binding.btnSearch.setOnClickListener() {
             var recipeSearch = binding.etSearch.toString()
             Log.i("MYTAG", "Search Button clicked")
@@ -54,7 +53,13 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                Search(binding.etSearch.toString())
+                val googleSearch = GoogleSearch(binding.etSearch.toString())
+                val searchResults = googleSearch.searchResults
+                val bundle = Bundle()
+                bundle.putSerializable("searchResults", searchResults)
+                val browseFragment = Browse()
+                browseFragment.arguments = bundle
+                supportFragmentManager.beginTransaction().replace(R.id.fragmentBrowse, browseFragment).commit()
             }
         }
 
@@ -71,12 +76,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
-    private fun Search(recipe: String) {
-
-        //implement google search API
-//            return JsonList
-    }
 
     private fun Random(): String {
 
