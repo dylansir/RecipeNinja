@@ -10,24 +10,27 @@ import kotlinx.coroutines.withContext
 
 class MainActivityViewModel : ViewModel() {
     private var _searchResults: ArrayList<GoogleSearching.Recipe>? = null
-    val searchResults: ArrayList<GoogleSearching.Recipe>?
+    var searchResults: ArrayList<GoogleSearching.Recipe>? = null
         get() = _searchResults
 
-    fun search(query: String) {
+    fun search(query: String): ArrayList<GoogleSearching.Recipe>? {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 Log.i("VMmainActivity","Search Launched")
                 try {
                     val results = GoogleSearching(query).searchResults
                     _searchResults = results
-                    Log.i("VMmainActivity","$_searchResults try")
+                    Log.i("VMmainActivity","$searchResults try")
                 } catch (e: Exception) {
                     _searchResults = null
-                    Log.i("VMmainActivity", "$_searchResults except Error: ${e.message}")
+                    Log.i("VMmainActivity", "$searchResults except Error: ${e.message}")
                 }
             }
         }
+        return searchResults
     }
+
+
 }
 
 

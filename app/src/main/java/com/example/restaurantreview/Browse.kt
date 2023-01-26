@@ -29,10 +29,13 @@ private lateinit var binding: FragmentBrowseBinding
 class Browse : Fragment(R.layout.fragment_browse) {
 
     companion object {
-        fun newInstance() = Browse()
+        fun newInstance(searchResults: ArrayList<GoogleSearching.Recipe>) = Browse().apply {
+            this.searchResults = searchResults
+        }
     }
 
-    private var searchResults = ArrayList<GoogleSearching.Recipe>()
+    private var searchResults: ArrayList<GoogleSearching.Recipe>? = null
+
 
     private lateinit var viewModel: BrowseViewModel
 
@@ -47,20 +50,9 @@ class Browse : Fragment(R.layout.fragment_browse) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.i("Browse", "onViewCreated")
         super.onViewCreated(view, savedInstanceState)
-
         val layoutManager = LinearLayoutManager(context)
         recyclerView = view.findViewById(R.id.rvBrowse)
         recyclerView.layoutManager = layoutManager
-        viewModel = ViewModelProvider(this).get(BrowseViewModel::class.java)
-        viewModel.searchResults.observe(viewLifecycleOwner, Observer { searchResults ->
-            if (searchResults != null) {
-                val searchResults = arguments?.getSerializable("searchResults") as ArrayList<GoogleSearching.Recipe>
-                recyclerView.adapter = MyAdapter(searchResults)
-                adapter = MyAdapter(searchResults)
-                recyclerView.adapter = adapter
-            }
-        })
+        recyclerView.adapter = MyAdapter(searchResults)
     }
 }
-
-
