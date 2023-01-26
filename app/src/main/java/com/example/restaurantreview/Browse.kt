@@ -1,5 +1,6 @@
 package com.example.restaurantreview
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.restaurantreview.databinding.FragmentBrowseBinding
@@ -24,7 +26,7 @@ lateinit var title: Array<String>
 //private lateinit var btnRecipe : Button
 private lateinit var binding: FragmentBrowseBinding
 
-class Browse : Fragment() {
+class Browse : Fragment(R.layout.fragment_browse) {
 
     companion object {
         fun newInstance() = Browse()
@@ -45,7 +47,8 @@ class Browse : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Log.i("Browse", "onViewCreated")
         super.onViewCreated(view, savedInstanceState)
-        val layoutManager = GridLayoutManager(context, 2)
+
+        val layoutManager = LinearLayoutManager(context)
         recyclerView = view.findViewById(R.id.rvBrowse)
         recyclerView.layoutManager = layoutManager
         viewModel = ViewModelProvider(this).get(BrowseViewModel::class.java)
@@ -53,8 +56,8 @@ class Browse : Fragment() {
             if (searchResults != null) {
                 val searchResults = arguments?.getSerializable("searchResults") as ArrayList<GoogleSearching.Recipe>
                 recyclerView.adapter = MyAdapter(searchResults)
-//                adapter = MyAdapter(searchResults as ArrayList<GoogleSearching.Recipe>)
-//                recyclerView.adapter = adapter
+                adapter = MyAdapter(searchResults)
+                recyclerView.adapter = adapter
             }
         })
     }

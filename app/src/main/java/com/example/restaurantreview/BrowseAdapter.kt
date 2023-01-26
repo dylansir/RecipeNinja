@@ -1,5 +1,7 @@
 package com.example.restaurantreview
 
+import android.graphics.Insets.add
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +25,7 @@ class MyAdapter(private val recipes : ArrayList<GoogleSearching.Recipe>) : Recyc
         return MyViewHolder(view)
     }
 
+
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             val currentItem = recipes[position]
@@ -30,6 +33,7 @@ class MyAdapter(private val recipes : ArrayList<GoogleSearching.Recipe>) : Recyc
                 .load(currentItem.image)
                 .into(holder.image)
             holder.text.text = currentItem.title
+            currentItem.localImage?.let { holder.image.setImageResource(it) }
         }
     }
 
@@ -41,7 +45,5 @@ class MyAdapter(private val recipes : ArrayList<GoogleSearching.Recipe>) : Recyc
         val image: ImageView = itemView.findViewById(R.id.cvImage)
         val text: TextView = itemView.findViewById(R.id.tvName)
         val btnRecipe: Button = itemView.findViewById(R.id.btnRecipeLink)
-
-
     }
 }
